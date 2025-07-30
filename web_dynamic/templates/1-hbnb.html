@@ -1,166 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+	<head>
+		<!-- HEAD -->
 
-    <!-- HEAD -->
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Holberton AirBnB</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Holberton AirBnB</title>
+		<!-- FAVICON -->
 
-    <!-- FAVICON -->
+		<link rel="shortcut icon" href="../static/images/icon.png?{{ cache_id }}" />
 
-    <link rel="shortcut icon" href="../static/images/icon.png?{{ cache_id }}">
+		<!-- **********************
+			CSS styles
+	    ********************** -->
 
-    <!-- **********************
-	 CSS styles
-	 ********************** -->
-
-    <link rel="stylesheet" href="../static/styles/4-common.css?{{ cache_id }}">
-    <link rel="stylesheet" href="../static/styles/3-header.css?{{ cache_id }}">
-    <link rel="stylesheet" href="../static/styles/3-footer.css?{{ cache_id }}">
-    <link rel="stylesheet" href="../static/styles/6-filters.css?{{ cache_id }}">
-    <link rel="stylesheet" href="../static/styles/8-places.css?{{ cache_id }}">
-    <link rel="stylesheet" href="../static/styles/font-awesome.css?{{ cache_id }}">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="../static/scripts/1-hbnb.js?{{ cache_id }}"></script>
-  </head>
-
-  <!-- **********************
-       BODY
-       ********************** -->
-
-  <body>
-
-    <!-- **********************
-	 HEADER
-	 ********************** -->
-
-    <header>
-    </header>
-    <main>
-      <div class="container">
+		<link
+			rel="stylesheet"
+			href="../static/styles/4-common.css?{{ cache_id }}" />
+		<link
+			rel="stylesheet"
+			href="../static/styles/3-header.css?{{ cache_id }}" />
+		<link
+			rel="stylesheet"
+			href="../static/styles/3-footer.css?{{ cache_id }}" />
+		<link
+			rel="stylesheet"
+			href="../static/styles/6-filters.css?{{ cache_id }}" />
+		<link
+			rel="stylesheet"
+			href="../static/styles/8-places.css?{{ cache_id }}" />
+		<link
+			rel="stylesheet"
+			href="../static/styles/font-awesome.css?{{ cache_id }}" />
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="../static/scripts/1-hbnb.js?{{ cache_id }}"></script>
+	</head>
 
 	<!-- **********************
-	     FILTERS
-	     ********************** -->
+		BODY
+    ********************** -->
 
-	<section class="filters">
+	<body>
+		<!-- **********************
+		HEADER
+		********************** -->
 
-	  <!-- **********************
-	       LOCATIONS
-	       ********************** -->
+		<header></header>
+		<main>
+			<div class="container">
+				<!-- **********************
+				FILTERS
+				********************** -->
 
-	  <div class="locations">
-	    <h3>States</h3>
-	    <h4>&nbsp;</h4>
-	    <ul class="popover">
-	      {% for state in states|dictsort %}
-	      <H2>{{ state[0] }}</H2>
-	      <UL>
-		{% for city in state[1].cities|sort(attribute='name') %}
-		<LI>{{ city.name }}</LI>
-		{% endfor %}
-	      </UL>
-	      {% endfor %}
-	    </ul>
-	  </div>
+				<section class="filters">
+					<!-- **********************
+					LOCATIONS
+					********************** -->
 
-	  <!-- **********************
-	       AMENITIES
-	       ********************** -->
+					<div class="locations">
+						<h3>States</h3>
+						<h4>&nbsp;</h4>
+						<ul class="popover">
+							{% for state in states|dictsort %}
+							<h2>{{ state[0] }}</h2>
+							<ul>
+								{% for city in state[1].cities|sort(attribute='name') %}
+								<li>{{ city.name }}</li>
+								{% endfor %}
+							</ul>
+							{% endfor %}
+						</ul>
+					</div>
 
-	  <div class="amenities">
-	    <h3>Amenities</h3>
-	    <h4>&nbsp;</h4>
-	    <ul class="popover">
-	      {% for amenity in amens|sort(attribute='name') %}
-	      <LI><INPUT type="checkbox" data-id="{{ amenity.id }}" data-name="{{ amenity.name }}">{{ amenity.name }}</LI>
-	      {% endfor %}
-	    </ul>
-	  </div>
+					<!-- **********************
+					AMENITIES
+					********************** -->
 
-	  <!-- **********************
-	       SEARCH BUTTON
-	       ********************** -->
+					<div class="amenities">
+						<h3>Amenities</h3>
+						<h4>&nbsp;</h4>
+						<ul class="popover">
+							{% for amenity in amens|sort(attribute='name') %}
+							<label for="{{ amenity.id }}"> input
+								<input type="checkbox" data-id="{{ amenity.id }}"
+									data-name="{{ amenity.name }}" /> {{ amenity.name }}
+							</label>
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
 
-	  <button>Search</button>
-	</section>
+					<!-- **********************
+					SEARCH BUTTON
+					********************** -->
 
-	<section class="places">
-	  <h1>Places</h1>
+					<button>Search</button>
+				</section>
 
-	<!-- **********************
-	     BEGIN 1 PLACE
-	     ********************** -->
+				<section class="places">
+					<h1>Places</h1>
 
-	  {% for place in places|sort(attribute='name') %}
+					<!-- **********************
+					BEGIN 1 PLACE
+					********************** -->
 
-	  <article>
+					{% for place in places|sort(attribute='name') %}
 
-	    <div class="title">
+					<article>
+						<div class="title">
+							<h2>{{ place.name }}</h2>
 
-	      <h2>{{ place.name }}</h2>
+							<div class="price_by_night">{{ place.price_by_night }}</div>
+						</div>
+						<div class="information">
+							<div class="max_guest">
+								<i class="fa fa-users fa-3x" aria-hidden="true"></i>
 
-	      <div class="price_by_night">
+								<br />
 
-		{{ place.price_by_night }}
+								{{ place.max_guest }} Guests
+							</div>
+							<div class="number_rooms">
+								<i class="fa fa-bed fa-3x" aria-hidden="true"></i>
 
-	      </div>
-	    </div>
-	    <div class="information">
-	      <div class="max_guest">
-		<i class="fa fa-users fa-3x" aria-hidden="true"></i>
+								<br />
 
-		<br />
+								{{ place.number_rooms }} Bedrooms
+							</div>
+							<div class="number_bathrooms">
+								<i class="fa fa-bath fa-3x" aria-hidden="true"></i>
 
-		{{ place.max_guest }} Guests
+								<br />
 
-	      </div>
-	      <div class="number_rooms">
-		<i class="fa fa-bed fa-3x" aria-hidden="true"></i>
+								{{ place.number_bathrooms }} Bathroom
+							</div>
+						</div>
 
-		<br />
+						<!-- **********************
+						USER
+						**********************  -->
 
-		{{ place.number_rooms }} Bedrooms
-	      </div>
-	      <div class="number_bathrooms">
-		<i class="fa fa-bath fa-3x" aria-hidden="true"></i>
+						<div class="user">
+							<strong>Owner: {{ users[place.user_id] }}</strong>
+						</div>
+						<div class="description">{{ place.description }}</div>
+					</article>
+					<!-- End 1 PLACE Article -->
 
-		<br />
+					{% endfor %}
+				</section>
+			</div>
+		</main>
 
-		{{ place.number_bathrooms }} Bathroom
+		<!-- FOOTER -->
 
-	      </div>
-	    </div>
-
-	    <!-- **********************
-		 USER
-		 **********************  -->
-
-	    <div class="user">
-
-	      <strong>Owner: {{ users[place.user_id] }}</strong>
-
-	    </div>
-	    <div class="description">
-
-	      {{ place.description }}
-
-	    </div>
-
-	  </article> <!-- End 1 PLACE Article -->
-
-	  {% endfor %}
-
-	</section>
-      </div>
-    </main>
-
-    <!-- FOOTER -->
-
-    <footer>
-      Holberton School
-    </footer>
-  </body>
+		<footer>Holberton School</footer>
+	</body>
 </html>
